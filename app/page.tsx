@@ -20,7 +20,6 @@ import {
   LayoutDashboard,
   MonitorPlay,
   Cpu,
-  Quote,
   ArrowRight,
   Check
 } from 'lucide-react';
@@ -184,7 +183,7 @@ const BrandLogo = ({ light = false }: { light?: boolean }) => {
       src={logoSrc}
       alt="WizeMoves Business Solutions"
       onError={() => setHasError(true)}
-      className={`h-10 md:h-12 w-auto object-contain ${light ? 'drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
+      className={`h-[4.5rem] md:h-[5.4rem] w-auto object-contain ${light ? 'drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
     />
   );
 };
@@ -195,7 +194,6 @@ export default function Home() {
     { label: 'จุดเด่น', id: 'why-wizemoves' },
     { label: 'แพ็กเกจ', id: 'packages' },
     { label: 'บริการเสริม', id: 'extra-services' },
-    { label: 'รีวิวลูกค้า', id: 'testimonials' },
     { label: 'คำถามที่พบบ่อย', id: 'faq' },
   ];
 
@@ -250,7 +248,7 @@ export default function Home() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-sm font-semibold text-slate-600 hover:text-[#6D28D9] transition-colors"
+                className="text-sm font-semibold text-slate-900 hover:text-black transition-colors"
               >
                 {item.label}
               </button>
@@ -287,7 +285,7 @@ export default function Home() {
             alt="Team strategy planning"
             fill
             priority
-            className="object-cover opacity-30"
+            className="object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#6D28D9]/35 via-white/78 to-[#F59E0B]/25" />
         </div>
@@ -658,63 +656,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-24 px-6 bg-[#ffffff] overflow-hidden scroll-mt-28 relative">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <FadeIn>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">เสียงจากลูกค้าตัวจริง</h2>
-              <p className="text-xl text-slate-600">ความสำเร็จของลูกค้า คือความภูมิใจของเรา</p>
-            </div>
-          </FadeIn>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { 
-                name: "คุณเมย์", 
-                role: "เจ้าของแบรนด์เครื่องสำอาง", 
-                text: "ตั้งแต่ใช้บริการ WizeMoves ยอดขายเพิ่มขึ้น 3 เท่าภายใน 2 เดือน คอนเทนต์โดนใจกลุ่มเป้าหมายมากค่ะ",
-                img: "https://www.sellsuki.co.th/_nuxt/img/image-2-c.bd86f15.png"
-              },
-              { 
-                name: "คุณเอก", 
-                role: "CEO ธุรกิจอาหารเสริม", 
-                text: "ทีมงานมืออาชีพมากครับ วางแผนกลยุทธ์ได้แม่นยำ ช่วยลดค่าแอดไปได้เยอะเลย แต่ยอดขายกลับเพิ่มขึ้น",
-                img: "https://www.sellsuki.co.th/_nuxt/img/image-2-c.1c660fe.png"
-              },
-              { 
-                name: "คุณจอย", 
-                role: "Founder ร้านเสื้อผ้าออนไลน์", 
-                text: "แอดมินตอบไวและปิดการขายเก่งมากค่ะ ช่วยให้จอยมีเวลาไปโฟกัสเรื่องการหาของใหม่ๆ มาขายได้เยอะเลย",
-                img: "https://www.sellsuki.co.th/_nuxt/img/image-2-c.bd86f15.png"
-              }
-            ].map((item, i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div className="p-8 rounded-[2rem] bg-slate-50 border border-slate-100 relative h-full flex flex-col">
-                  <Quote className="w-10 h-10 text-[#6D28D9]/10 absolute top-6 right-8" />
-                  <p className="text-slate-600 italic mb-8 flex-grow leading-relaxed">&ldquo;{item.text}&rdquo;</p>
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-sm bg-white">
-                      <Image 
-                        src={item.img} 
-                        alt={item.name} 
-                        fill 
-                        className="object-contain"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                    <div>
-                      <div className="font-bold text-slate-900">{item.name}</div>
-                      <div className="text-xs text-slate-500">{item.role}</div>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Lead Form */}
       <section id="contact-form" className="py-24 px-6 bg-amber-50/50 scroll-mt-28 relative overflow-hidden">
         <SectionTexture variant="gold" />
@@ -806,9 +747,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-slate-500 text-sm">
             © {new Date().getFullYear()} WizeMoves Content by Sellsuki. All rights reserved.
-          </div>
-          <div className="text-slate-400 text-xs mt-2 md:mt-0">
-            Version 1.0.0 (Latest)
           </div>
           <div className="flex items-center gap-3 text-slate-600">
             <span className="text-sm">ติดต่อสอบถาม:</span>
