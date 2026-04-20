@@ -339,10 +339,10 @@ export default function Home() {
               <div className="text-slate-500">LINE Certified Coach</div>
             </FadeIn>
             <FadeIn delay={0.6} className="col-span-2 md:col-span-1">
-              <div className="text-2xl font-bold text-slate-900 mb-2 flex items-center justify-center md:justify-start gap-2 h-10">
+              <div className="text-2xl font-bold text-slate-900 mb-2 flex items-center justify-center gap-2 h-10">
                 ISO 29110
               </div>
-              <div className="text-slate-500">มาตรฐานระดับสากล</div>
+              <div className="text-slate-500 text-center">มาตรฐานระดับสากล</div>
             </FadeIn>
           </div>
         </div>
