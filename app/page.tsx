@@ -78,25 +78,31 @@ const Tooltip = ({ text, children }: { text: string, children: React.ReactNode }
 const SectionTexture = ({ variant = 'mixed' }: { variant?: 'purple' | 'gold' | 'mixed' }) => {
   const palette = {
     purple: {
-      primary: 'rgba(109, 40, 217, 0.24)',
-      secondary: 'rgba(109, 40, 217, 0.14)',
-      accent: 'rgba(245, 158, 11, 0.14)',
-      line: 'rgba(255, 255, 255, 0.55)',
-      ring: 'rgba(255, 255, 255, 0.36)',
+      primary: 'rgba(109, 40, 217, 0.18)',
+      secondary: 'rgba(245, 158, 11, 0.12)',
+      accent: 'rgba(109, 40, 217, 0.10)',
+      line: 'rgba(109, 40, 217, 0.20)',
+      ring: 'rgba(109, 40, 217, 0.24)',
+      edgeFrom: 'rgba(109, 40, 217, 0.18)',
+      edgeTo: 'rgba(245, 158, 11, 0.10)',
     },
     gold: {
-      primary: 'rgba(245, 158, 11, 0.26)',
-      secondary: 'rgba(245, 158, 11, 0.14)',
-      accent: 'rgba(109, 40, 217, 0.14)',
-      line: 'rgba(255, 255, 255, 0.58)',
-      ring: 'rgba(255, 255, 255, 0.34)',
+      primary: 'rgba(245, 158, 11, 0.18)',
+      secondary: 'rgba(109, 40, 217, 0.11)',
+      accent: 'rgba(245, 158, 11, 0.10)',
+      line: 'rgba(245, 158, 11, 0.22)',
+      ring: 'rgba(245, 158, 11, 0.24)',
+      edgeFrom: 'rgba(245, 158, 11, 0.20)',
+      edgeTo: 'rgba(109, 40, 217, 0.10)',
     },
     mixed: {
-      primary: 'rgba(109, 40, 217, 0.2)',
-      secondary: 'rgba(245, 158, 11, 0.18)',
-      accent: 'rgba(109, 40, 217, 0.14)',
-      line: 'rgba(255, 255, 255, 0.56)',
-      ring: 'rgba(255, 255, 255, 0.34)',
+      primary: 'rgba(109, 40, 217, 0.16)',
+      secondary: 'rgba(245, 158, 11, 0.14)',
+      accent: 'rgba(109, 40, 217, 0.08)',
+      line: 'rgba(74, 42, 126, 0.20)',
+      ring: 'rgba(95, 53, 162, 0.20)',
+      edgeFrom: 'rgba(109, 40, 217, 0.16)',
+      edgeTo: 'rgba(245, 158, 11, 0.14)',
     },
   }[variant];
 
@@ -149,9 +155,37 @@ const SectionTexture = ({ variant = 'mixed' }: { variant?: 'purple' | 'gold' | '
           backgroundImage: `repeating-linear-gradient(125deg, ${palette.line} 0 1px, transparent 1px 11px)`,
         }}
       />
-      <div className="absolute left-0 top-1/2 h-24 w-20 -translate-y-1/2 bg-gradient-to-r from-white/20 to-transparent" />
-      <div className="absolute right-0 top-1/2 h-24 w-20 -translate-y-1/2 bg-gradient-to-l from-white/20 to-transparent" />
+      <div
+        className="absolute left-0 top-1/2 h-24 w-20 -translate-y-1/2"
+        style={{ background: `linear-gradient(to right, ${palette.edgeFrom}, transparent)` }}
+      />
+      <div
+        className="absolute right-0 top-1/2 h-24 w-20 -translate-y-1/2"
+        style={{ background: `linear-gradient(to left, ${palette.edgeTo}, transparent)` }}
+      />
     </div>
+  );
+};
+
+const BrandLogo = ({ light = false }: { light?: boolean }) => {
+  const [hasError, setHasError] = useState(false);
+  const logoSrc = '/logo/wizemoves-main.png';
+
+  if (hasError) {
+    return (
+      <span className={`text-2xl font-bold ${light ? 'text-white drop-shadow-sm' : 'bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] bg-clip-text text-transparent'}`}>
+        WizeMoves
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={logoSrc}
+      alt="WizeMoves Business Solutions"
+      onError={() => setHasError(true)}
+      className={`h-10 md:h-12 w-auto object-contain ${light ? 'drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
+    />
   );
 };
 
@@ -207,9 +241,9 @@ export default function Home() {
             type="button"
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className="text-2xl font-bold bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] bg-clip-text text-transparent hover:opacity-85 transition-opacity"
+            className="hover:opacity-85 transition-opacity"
           >
-            WizeMoves
+            <BrandLogo light={!isScrolled} />
           </button>
           <div className="hidden md:flex items-center gap-5">
             {navItems.map((item) => (
@@ -253,9 +287,9 @@ export default function Home() {
             alt="Team strategy planning"
             fill
             priority
-            className="object-cover opacity-40"
+            className="object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#6D28D9]/45 via-white/70 to-[#F59E0B]/35" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#6D28D9]/35 via-white/78 to-[#F59E0B]/25" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <FadeIn>
@@ -313,8 +347,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id="why-wizemoves" className="py-16 md:py-24 px-6 relative z-10 bg-purple-50/50 scroll-mt-28">
-        <SectionTexture variant="purple" />
+      <section id="why-wizemoves" className="py-16 md:py-24 px-6 relative z-10 bg-[#ffffff] scroll-mt-28">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <FadeIn>
@@ -349,7 +382,8 @@ export default function Home() {
       </section>
 
       {/* Pain Points */}
-      <section id="pain-points" className="py-24 px-6 relative bg-amber-50/50 scroll-mt-28">
+      <section id="pain-points" className="py-24 px-6 relative bg-white scroll-mt-28">
+        <SectionTexture variant="gold" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             <FadeIn>
@@ -519,8 +553,7 @@ export default function Home() {
       </section>
 
       {/* Extra Services */}
-      <section id="extra-services" className="py-24 px-6 relative bg-purple-50/50 scroll-mt-28">
-        <SectionTexture variant="purple" />
+      <section id="extra-services" className="py-24 px-6 relative bg-[#ffffff] scroll-mt-28">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             <FadeIn>
@@ -626,8 +659,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-24 px-6 bg-white overflow-hidden scroll-mt-28 relative">
-        <SectionTexture variant="mixed" />
+      <section id="testimonials" className="py-24 px-6 bg-[#ffffff] overflow-hidden scroll-mt-28 relative">
         <div className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
@@ -737,8 +769,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-24 px-6 bg-slate-50 scroll-mt-28 relative overflow-hidden">
-        <SectionTexture variant="mixed" />
+      <section id="faq" className="py-24 px-6 bg-[#ffffff] scroll-mt-28 relative overflow-hidden">
         <div className="max-w-3xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
