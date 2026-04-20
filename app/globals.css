@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Heavent", var(--font-anuphan), var(--font-ibm-plex), ui-sans-serif, system-ui, sans-serif;
+}
