@@ -75,8 +75,95 @@ const Tooltip = ({ text, children }: { text: string, children: React.ReactNode }
   );
 };
 
+const SectionTexture = ({ variant = 'mixed' }: { variant?: 'purple' | 'gold' | 'mixed' }) => {
+  const palette = {
+    purple: {
+      primary: 'rgba(109, 40, 217, 0.24)',
+      secondary: 'rgba(109, 40, 217, 0.14)',
+      accent: 'rgba(245, 158, 11, 0.14)',
+      line: 'rgba(255, 255, 255, 0.55)',
+      ring: 'rgba(255, 255, 255, 0.36)',
+    },
+    gold: {
+      primary: 'rgba(245, 158, 11, 0.26)',
+      secondary: 'rgba(245, 158, 11, 0.14)',
+      accent: 'rgba(109, 40, 217, 0.14)',
+      line: 'rgba(255, 255, 255, 0.58)',
+      ring: 'rgba(255, 255, 255, 0.34)',
+    },
+    mixed: {
+      primary: 'rgba(109, 40, 217, 0.2)',
+      secondary: 'rgba(245, 158, 11, 0.18)',
+      accent: 'rgba(109, 40, 217, 0.14)',
+      line: 'rgba(255, 255, 255, 0.56)',
+      ring: 'rgba(255, 255, 255, 0.34)',
+    },
+  }[variant];
+
+  return (
+    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden>
+      <div
+        className="absolute inset-0 opacity-70"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 14% 20%, ${palette.primary}, transparent 48%),
+            radial-gradient(circle at 86% 76%, ${palette.secondary}, transparent 45%),
+            radial-gradient(circle at 75% 26%, ${palette.accent}, transparent 40%)
+          `,
+        }}
+      />
+      <div
+        className="absolute -left-20 top-8 h-64 w-64 rounded-full blur-2xl"
+        style={{ backgroundColor: palette.primary }}
+      />
+      <div
+        className="absolute -right-24 bottom-6 h-72 w-72 rounded-full blur-2xl"
+        style={{ backgroundColor: palette.secondary }}
+      />
+      <div
+        className="absolute left-6 top-8 h-48 w-48 rounded-full border"
+        style={{ borderColor: palette.ring }}
+      />
+      <div
+        className="absolute left-20 top-20 h-28 w-28 rounded-full border"
+        style={{ borderColor: palette.ring }}
+      />
+      <div
+        className="absolute right-8 bottom-10 h-56 w-56 rounded-full border"
+        style={{ borderColor: palette.ring }}
+      />
+      <div
+        className="absolute right-20 bottom-20 h-32 w-32 rounded-full border"
+        style={{ borderColor: palette.ring }}
+      />
+      <div
+        className="absolute left-8 top-16 h-24 w-40 opacity-35"
+        style={{
+          backgroundImage: `radial-gradient(${palette.line} 1.1px, transparent 1.5px)`,
+          backgroundSize: '12px 12px',
+        }}
+      />
+      <div
+        className="absolute right-8 bottom-16 h-20 w-32 opacity-30"
+        style={{
+          backgroundImage: `repeating-linear-gradient(125deg, ${palette.line} 0 1px, transparent 1px 11px)`,
+        }}
+      />
+      <div className="absolute left-0 top-1/2 h-24 w-20 -translate-y-1/2 bg-gradient-to-r from-white/20 to-transparent" />
+      <div className="absolute right-0 top-1/2 h-24 w-20 -translate-y-1/2 bg-gradient-to-l from-white/20 to-transparent" />
+    </div>
+  );
+};
+
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navItems = [
+    { label: 'จุดเด่น', id: 'why-wizemoves' },
+    { label: 'แพ็กเกจ', id: 'packages' },
+    { label: 'บริการเสริม', id: 'extra-services' },
+    { label: 'รีวิวลูกค้า', id: 'testimonials' },
+    { label: 'คำถามที่พบบ่อย', id: 'faq' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,6 +175,14 @@ export default function Home() {
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -108,25 +203,61 @@ export default function Home() {
         <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'h-16' : 'h-24'
         }`}>
-          <div className="text-2xl font-bold bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] bg-clip-text text-transparent">
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+            className="text-2xl font-bold bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] bg-clip-text text-transparent hover:opacity-85 transition-opacity"
+          >
             WizeMoves
+          </button>
+          <div className="hidden md:flex items-center gap-5">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="text-sm font-semibold text-slate-600 hover:text-[#6D28D9] transition-colors"
+              >
+                {item.label}
+              </button>
+            ))}
+            <button 
+              onClick={scrollToForm}
+              className={`px-6 py-2.5 rounded-full transition-all font-bold text-sm ${
+                isScrolled 
+                  ? 'bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] hover:opacity-90 text-white shadow-md' 
+                  : 'bg-slate-900/5 hover:bg-slate-900/10 text-slate-900 border border-slate-900/10'
+              }`}
+            >
+              ติดต่อเรา
+            </button>
           </div>
           <button 
             onClick={scrollToForm}
-            className={`px-6 py-2.5 rounded-full transition-all font-bold text-sm ${
+            className={`md:hidden px-5 py-2 rounded-full transition-all font-bold text-sm ${
               isScrolled 
-                ? 'bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] hover:opacity-90 text-white shadow-md' 
-                : 'bg-slate-900/5 hover:bg-slate-900/10 text-slate-900 border border-slate-900/10'
+                ? 'bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] text-white shadow-md' 
+                : 'bg-slate-900/5 text-slate-900 border border-slate-900/10'
             }`}
           >
-            ติดต่อเรา
+            ติดต่อ
           </button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section id="hero" className="relative pt-40 pb-20 px-6 scroll-mt-28 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="https://media.discordapp.net/attachments/1158259534633128037/1495663697232793670/Gemini_Generated_Image_3pgtpg3pgtpg3pgt.png?ex=69e710dd&is=69e5bf5d&hm=04c984fcdb9e8923c14838e862432b4fbe38728a75ee92bf96e7e3c851218c9d&=&format=webp&quality=lossless&width=2616&height=1110"
+            alt="Team strategy planning"
+            fill
+            priority
+            className="object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#6D28D9]/45 via-white/70 to-[#F59E0B]/35" />
+        </div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <FadeIn>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 mb-8">
               <span className="flex h-2 w-2 rounded-full bg-[#F59E0B] animate-pulse"></span>
@@ -182,31 +313,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Trusted By Section */}
-      <section className="py-12 border-y border-slate-100 bg-white/50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-10">Trusted by 8,000+ Brands</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 transition-all duration-500">
-            {[
-              "https://www.sellsuki.co.th/_nuxt/img/image-2-c.bd86f15.png",
-              "https://www.sellsuki.co.th/_nuxt/img/image-2-c.1c660fe.png"
-            ].map((url, i) => (
-              <div key={i} className="relative w-32 h-16 md:w-48 md:h-24">
-                <Image
-                  src={url}
-                  alt={`Partner Logo ${i}`}
-                  fill
-                  className="object-contain"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="py-16 md:py-24 px-6 relative z-10 bg-purple-50/50">
-        <div className="max-w-7xl mx-auto">
+      <section id="why-wizemoves" className="py-16 md:py-24 px-6 relative z-10 bg-purple-50/50 scroll-mt-28">
+        <SectionTexture variant="purple" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <FadeIn>
               <div className="text-left">
@@ -240,8 +349,8 @@ export default function Home() {
       </section>
 
       {/* Pain Points */}
-      <section className="py-24 px-6 relative bg-amber-50/50">
-        <div className="max-w-7xl mx-auto">
+      <section id="pain-points" className="py-24 px-6 relative bg-amber-50/50 scroll-mt-28">
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             <FadeIn>
               <div className="relative aspect-square max-w-lg mx-auto lg:mx-0 rounded-[3rem] overflow-hidden rotate-3 bg-white/50">
@@ -284,8 +393,9 @@ export default function Home() {
       </section>
 
       {/* Core Services Pricing */}
-      <section className="py-24 px-6 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
+      <section id="packages" className="py-24 px-6 bg-slate-50 scroll-mt-28 relative overflow-hidden">
+        <SectionTexture variant="mixed" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">แพ็กเกจที่ตอบโจทย์ทุกขนาดธุรกิจ</h2>
@@ -409,8 +519,9 @@ export default function Home() {
       </section>
 
       {/* Extra Services */}
-      <section className="py-24 px-6 relative bg-purple-50/50">
-        <div className="max-w-7xl mx-auto">
+      <section id="extra-services" className="py-24 px-6 relative bg-purple-50/50 scroll-mt-28">
+        <SectionTexture variant="purple" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             <FadeIn>
               <div className="text-left">
@@ -515,8 +626,9 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 px-6 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+      <section id="testimonials" className="py-24 px-6 bg-white overflow-hidden scroll-mt-28 relative">
+        <SectionTexture variant="mixed" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">เสียงจากลูกค้าตัวจริง</h2>
@@ -572,8 +684,9 @@ export default function Home() {
       </section>
 
       {/* CTA Lead Form */}
-      <section id="contact-form" className="py-24 px-6 bg-amber-50/50">
-        <div className="max-w-3xl mx-auto">
+      <section id="contact-form" className="py-24 px-6 bg-amber-50/50 scroll-mt-28 relative overflow-hidden">
+        <SectionTexture variant="gold" />
+        <div className="max-w-3xl mx-auto relative z-10">
           <FadeIn>
             <div className="p-8 md:p-12 rounded-[2rem] bg-white border border-slate-100 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#6D28D9] to-[#F59E0B]" />
@@ -624,8 +737,9 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 px-6 bg-slate-50">
-        <div className="max-w-3xl mx-auto">
+      <section id="faq" className="py-24 px-6 bg-slate-50 scroll-mt-28 relative overflow-hidden">
+        <SectionTexture variant="mixed" />
+        <div className="max-w-3xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">คำถามที่พบบ่อย</h2>
