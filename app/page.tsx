@@ -183,27 +183,18 @@ const BrandLogo = ({ light = false }: { light?: boolean }) => {
       src={logoSrc}
       alt="WizeMoves Business Solutions"
       onError={() => setHasError(true)}
-      className={`h-[4.5rem] md:h-[5.4rem] w-auto object-contain ${light ? 'drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
+      className={`h-[4.5rem] md:h-[5.4rem] w-auto object-contain ${light ? 'brightness-0 invert drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
     />
   );
 };
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const navItems = [
     { label: 'จุดเด่น', id: 'why-wizemoves' },
     { label: 'แพ็กเกจ', id: 'packages' },
     { label: 'บริการเสริม', id: 'extra-services' },
     { label: 'คำถามที่พบบ่อย', id: 'faq' },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -227,21 +218,16 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-2xl border-b border-slate-100 shadow-sm' 
-          : 'bg-transparent border-b border-transparent'
-      }`}>
-        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${
-          isScrolled ? 'h-16' : 'h-24'
-        }`}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-white via-[#f7f7f7] to-[#f2f2f2] border-b border-slate-200/80 shadow-[0_8px_22px_rgba(15,23,42,0.05)]">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#6D28D9]/45 via-[#F59E0B]/35 to-[#6D28D9]/45" />
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <button
             type="button"
             onClick={scrollToTop}
             aria-label="Scroll to top"
             className="hover:opacity-85 transition-opacity"
           >
-            <BrandLogo light={!isScrolled} />
+            <BrandLogo light={false} />
           </button>
           <div className="hidden md:flex items-center gap-5">
             {navItems.map((item) => (
@@ -255,22 +241,14 @@ export default function Home() {
             ))}
             <button 
               onClick={scrollToForm}
-              className={`px-6 py-2.5 rounded-full transition-all font-bold text-sm ${
-                isScrolled 
-                  ? 'bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] hover:opacity-90 text-white shadow-md' 
-                  : 'bg-slate-900/5 hover:bg-slate-900/10 text-slate-900 border border-slate-900/10'
-              }`}
+              className="px-6 py-2.5 rounded-full transition-all font-bold text-sm bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] hover:opacity-90 text-white shadow-md"
             >
               ติดต่อเรา
             </button>
           </div>
           <button 
             onClick={scrollToForm}
-            className={`md:hidden px-5 py-2 rounded-full transition-all font-bold text-sm ${
-              isScrolled 
-                ? 'bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] text-white shadow-md' 
-                : 'bg-slate-900/5 text-slate-900 border border-slate-900/10'
-            }`}
+            className="md:hidden px-5 py-2 rounded-full transition-all font-bold text-sm bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] text-white shadow-md"
           >
             ติดต่อ
           </button>
@@ -287,7 +265,7 @@ export default function Home() {
             priority
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#6D28D9]/35 via-white/78 to-[#F59E0B]/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#6D28D9]/32 via-white/52 to-[#F59E0B]/22" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <FadeIn>
@@ -323,7 +301,7 @@ export default function Home() {
           </FadeIn>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-20 max-w-3xl mx-auto border-t border-slate-100 pt-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-20 max-w-3xl mx-auto pt-12">
             <FadeIn delay={0.4}>
               <div className="text-4xl font-bold text-slate-900 mb-2">
                 <Counter from={0} to={8000} suffix="+" />
