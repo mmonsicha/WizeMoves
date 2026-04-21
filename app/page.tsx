@@ -218,8 +218,7 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-white via-[#f7f7f7] to-[#f2f2f2] border-b border-slate-200/80 shadow-[0_8px_22px_rgba(15,23,42,0.05)]">
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#6D28D9]/45 via-[#F59E0B]/35 to-[#6D28D9]/45" />
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <button
             type="button"
@@ -536,25 +535,55 @@ export default function Home() {
               <div className="text-left">
                 <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">บริการเสริมเพื่อความสมบูรณ์แบบ</h2>
                 <p className="text-xl text-slate-600 mb-10">เราไม่ได้มีแค่คอนเทนต์ แต่เรามีทีมงานคุณภาพที่พร้อมซัพพอร์ตธุรกิจคุณในทุกมิติ ทั้งงานโปรดักชั่นระดับมืออาชีพ และทีมแอดมินปิดการขาย</p>
-                
-                <div className="space-y-4">
-                  <div className="p-6 rounded-3xl bg-white border border-slate-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0">
-                      <MessageCircle className="w-6 h-6 text-blue-600" />
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="group h-full p-6 rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6">
+                      <MessageCircle className="w-7 h-7 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900">Admin Services</h4>
-                      <p className="text-slate-500 text-sm">ดูแลแชท ปิดการขาย ตลอด 24 ชม.</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-6">Admin Services</h3>
+                    <div className="space-y-6 flex-grow">
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div className="font-bold text-xl text-slate-900 mb-1">20,000.- / เดือน</div>
+                        <div className="text-slate-500 text-sm">จันทร์ - เสาร์ (9:00 - 18:00 น.)</div>
+                      </div>
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div className="font-bold text-xl text-slate-900 mb-1">40,000.- / เดือน</div>
+                        <div className="text-slate-500 text-sm">จันทร์ - อาทิตย์ (9:00 - 24:00 น.)</div>
+                        <div className="text-sm text-[#F59E0B] mt-2 flex items-center gap-1 font-bold">
+                          <Star className="w-4 h-4 fill-current" /> บริการปิดการขายมืออาชีพ
+                        </div>
+                      </div>
                     </div>
+                    <button onClick={scrollToForm} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                      สนใจบริการ <ChevronRight className="w-4 h-4" />
+                    </button>
                   </div>
-                  <div className="p-6 rounded-3xl bg-white border border-slate-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0">
-                      <Camera className="w-6 h-6 text-emerald-600" />
+
+                  <div className="group h-full p-6 rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6">
+                      <Camera className="w-7 h-7 text-emerald-600" />
                     </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900">Production Team</h4>
-                      <p className="text-slate-500 text-sm">ถ่ายภาพและวิดีโอคุณภาพสูง</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-6">Production</h3>
+                    <div className="space-y-6 flex-grow">
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
+                        <Camera className="w-6 h-6 text-slate-400 shrink-0 mt-1" />
+                        <div>
+                          <div className="font-bold text-xl text-slate-900 mb-1">Photo Still: 10,000.-</div>
+                          <div className="text-slate-500 text-sm">ถ่ายภาพนิ่ง 30-50 ภาพ</div>
+                        </div>
+                      </div>
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
+                        <Video className="w-6 h-6 text-slate-400 shrink-0 mt-1" />
+                        <div>
+                          <div className="font-bold text-xl text-slate-900 mb-1">Video Production: 20,000.-</div>
+                          <div className="text-slate-500 text-sm">ถ่ายทำและตัดต่อ 2-3 คลิป</div>
+                        </div>
+                      </div>
                     </div>
+                    <button onClick={scrollToForm} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                      สนใจบริการ <ChevronRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -577,60 +606,6 @@ export default function Home() {
             </FadeIn>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <FadeIn delay={0.3}>
-              <div className="group p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
-                <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6">
-                  <MessageCircle className="w-7 h-7 text-blue-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-6">Admin Services</h3>
-                <div className="space-y-6 flex-grow">
-                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="font-bold text-xl text-slate-900 mb-1">20,000.- / เดือน</div>
-                    <div className="text-slate-500 text-sm">จันทร์ - เสาร์ (9:00 - 18:00 น.)</div>
-                  </div>
-                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="font-bold text-xl text-slate-900 mb-1">40,000.- / เดือน</div>
-                    <div className="text-slate-500 text-sm">จันทร์ - อาทิตย์ (9:00 - 24:00 น.)</div>
-                    <div className="text-sm text-[#F59E0B] mt-2 flex items-center gap-1 font-bold">
-                      <Star className="w-4 h-4 fill-current" /> บริการปิดการขายมืออาชีพ
-                    </div>
-                  </div>
-                </div>
-                <button onClick={scrollToForm} className="mt-8 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
-                  สนใจบริการ <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.4}>
-              <div className="group p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
-                <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6">
-                  <Camera className="w-7 h-7 text-emerald-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-6">Production</h3>
-                <div className="space-y-6 flex-grow">
-                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
-                    <Camera className="w-6 h-6 text-slate-400 shrink-0 mt-1" />
-                    <div>
-                      <div className="font-bold text-xl text-slate-900 mb-1">Photo Still: 10,000.-</div>
-                      <div className="text-slate-500 text-sm">ถ่ายภาพนิ่ง 30-50 ภาพ</div>
-                    </div>
-                  </div>
-                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
-                    <Video className="w-6 h-6 text-slate-400 shrink-0 mt-1" />
-                    <div>
-                      <div className="font-bold text-xl text-slate-900 mb-1">Video Production: 20,000.-</div>
-                      <div className="text-slate-500 text-sm">ถ่ายทำและตัดต่อ 2-3 คลิป</div>
-                    </div>
-                  </div>
-                </div>
-                <button onClick={scrollToForm} className="mt-8 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
-                  สนใจบริการ <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </FadeIn>
-          </div>
         </div>
       </section>
 
