@@ -228,19 +228,19 @@ export default function Home() {
           >
             <BrandLogo light={false} />
           </button>
-          <div className="hidden md:flex items-center gap-5">
+          <div className="hidden md:flex items-center gap-9 ml-auto mr-4 lg:mr-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-sm font-semibold text-slate-900 hover:text-black transition-colors"
+                className="px-1 py-1 text-sm font-semibold text-slate-900 hover:text-black transition-colors"
               >
                 {item.label}
               </button>
             ))}
             <button 
               onClick={scrollToForm}
-              className="px-6 py-2.5 rounded-full transition-all font-bold text-sm bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] hover:opacity-90 text-white shadow-md"
+              className="ml-2 px-6 py-2.5 rounded-full transition-all font-bold text-sm bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] hover:opacity-90 text-white shadow-md"
             >
               ติดต่อเรา
             </button>
