@@ -1,7 +1,8 @@
 'use client';
 
-// Triggering re-compilation
+import Footer from './components/Footer';
 import { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import { 
@@ -188,7 +189,12 @@ const BrandLogo = ({ light = false }: { light?: boolean }) => {
   );
 };
 
+declare global {
+  interface Window { dataLayer: Record<string, unknown>[]; }
+}
+
 export default function Home() {
+  const router = useRouter();
   const navItems = [
     { label: 'จุดเด่น', id: 'why-wizemoves' },
     { label: 'แพ็กเกจ', id: 'packages' },
@@ -196,8 +202,27 @@ export default function Home() {
     { label: 'คำถามที่พบบ่อย', id: 'faq' },
   ];
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSubmit = () => {
+    setIsLoading(true);
+
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const entryId = `WIZEMOVESCONTENT${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}`;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'form_submit_success',
+      service: 'WizeMoves-Content',
+      entry_id: entryId,
+    });
+
+    router.push('/thank-you');
   };
 
   const scrollToSection = (id: string) => {
@@ -206,6 +231,15 @@ export default function Home() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const [details, setDetails] = useState('');
+
+  const scrollToFormWithDetails = (text: string) => {
+    setDetails(text);
+    setTimeout(() => {
+      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
   };
 
   return (
@@ -555,8 +589,8 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <button onClick={scrollToForm} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
-                      สนใจบริการ <ChevronRight className="w-4 h-4" />
+                    <button onClick={() => scrollToFormWithDetails('สนใจบริการ Admin services')} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                      สนใจบริการ Admin services <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
 
@@ -581,8 +615,8 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <button onClick={scrollToForm} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
-                      สนใจบริการ <ChevronRight className="w-4 h-4" />
+                    <button onClick={() => scrollToFormWithDetails('สนใจบริการ Photo / Video Production')} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                      สนใจบริการ Photo / Video Production <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -622,11 +656,13 @@ export default function Home() {
                 <p className="text-slate-600">กรอกข้อมูลด้านล่างเพื่อให้ทีมงานติดต่อกลับพร้อมแผนธุรกิจฟรี</p>
               </div>
 
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">เป้าหมายของคุณคืออะไร?</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    เป้าหมายของคุณคืออะไร? <span className="text-red-500">*</span>
+                  </label>
                   <div className="relative group">
-                    <select defaultValue="" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all appearance-none">
+                    <select required defaultValue="" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all appearance-none">
                       <option value="" disabled>เลือกเป้าหมายหลักของคุณ</option>
                       <option value="sales">เพิ่มยอดขาย</option>
                       <option value="brand">สร้างแบรนด์ให้เป็นที่รู้จัก</option>
@@ -639,22 +675,43 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">ชื่อแบรนด์ของคุณ</label>
-                  <input type="text" placeholder="ระบุชื่อแบรนด์หรือบริษัท" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all" />
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    ชื่อแบรนด์ของคุณ <span className="text-red-500">*</span>
+                  </label>
+                  <input required type="text" placeholder="ระบุชื่อแบรนด์หรือบริษัท" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">เบอร์โทรศัพท์ติดต่อ</label>
-                  <input type="tel" placeholder="08X-XXX-XXXX" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all" />
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    เบอร์โทรศัพท์ติดต่อ <span className="text-red-500">*</span>
+                  </label>
+                  <input required type="tel" placeholder="08X-XXX-XXXX" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">LINE ID สำหรับรับแผนธุรกิจฟรี</label>
-                  <input type="text" placeholder="@yourlineid" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all" />
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    LINE ID สำหรับรับแผนธุรกิจฟรี <span className="text-red-500">*</span>
+                  </label>
+                  <input required type="text" placeholder="@yourlineid" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all" />
                 </div>
 
-                <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] text-white font-bold text-lg hover:opacity-90 hover:scale-[1.02] transition-all duration-300 mt-8 shadow-lg shadow-[#6D28D9]/20">
-                  🚀 เริ่มต้นเส้นทางความสำเร็จกับเรา
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">รายละเอียดเพิ่มเติม</label>
+                  <textarea
+                    value={details}
+                    onChange={(e) => setDetails(e.target.value)}
+                    rows={3}
+                    placeholder="ระบุความสนใจหรือข้อมูลเพิ่มเติม (ถ้ามี)"
+                    className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6D28D9]/20 focus:border-[#6D28D9] transition-all resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#F59E0B] text-white font-bold text-lg hover:opacity-90 hover:scale-[1.02] transition-all duration-300 mt-8 shadow-lg shadow-[#6D28D9]/20 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
+                >
+                  {isLoading ? 'กำลังส่ง...' : '🚀 เริ่มต้นเส้นทางความสำเร็จกับเรา'}
                 </button>
               </form>
             </div>
@@ -695,18 +752,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-slate-100 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-slate-500 text-sm">
-            © {new Date().getFullYear()} WizeMoves Content by Sellsuki. All rights reserved.
-          </div>
-          <div className="flex items-center gap-3 text-slate-600">
-            <span className="text-sm">ติดต่อสอบถาม:</span>
-            <a href="tel:020263250" className="text-lg font-bold text-slate-900 hover:text-[#6D28D9] transition-colors">02-026-3250</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
