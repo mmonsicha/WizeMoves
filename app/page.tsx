@@ -169,7 +169,7 @@ const SectionTexture = ({ variant = 'mixed' }: { variant?: 'purple' | 'gold' | '
 
 const BrandLogo = ({ light = false }: { light?: boolean }) => {
   const [hasError, setHasError] = useState(false);
-  const logoSrc = '/logo/wizemoves-main.png';
+  const logoSrc = '/logo/wizemoves-content.png';
 
   if (hasError) {
     return (
@@ -184,7 +184,7 @@ const BrandLogo = ({ light = false }: { light?: boolean }) => {
       src={logoSrc}
       alt="WizeMoves Business Solutions"
       onError={() => setHasError(true)}
-      className={`h-[4.5rem] md:h-[5.4rem] w-auto object-contain ${light ? 'brightness-0 invert drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
+      className={`h-9 w-auto object-contain ${light ? 'brightness-0 invert drop-shadow-[0_2px_8px_rgba(255,255,255,0.45)]' : ''}`}
     />
   );
 };
@@ -575,7 +575,7 @@ export default function Home() {
                     <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6">
                       <MessageCircle className="w-7 h-7 text-blue-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-6">Admin Services</h3>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-6 cursor-pointer" onClick={() => scrollToFormWithDetails('สนใจบริการ Admin services')}>Admin Services</h3>
                     <div className="space-y-6 flex-grow">
                       <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
                         <div className="font-bold text-xl text-slate-900 mb-1">20,000.- / เดือน</div>
@@ -590,7 +590,7 @@ export default function Home() {
                       </div>
                     </div>
                     <button onClick={() => scrollToFormWithDetails('สนใจบริการ Admin services')} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
-                      สนใจบริการ Admin services <ChevronRight className="w-4 h-4" />
+                      สนใจบริการ <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
 
@@ -598,7 +598,7 @@ export default function Home() {
                     <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6">
                       <Camera className="w-7 h-7 text-emerald-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-6">Production</h3>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-6 cursor-pointer" onClick={() => scrollToFormWithDetails('สนใจบริการ Photo / Video Production')}>Production</h3>
                     <div className="space-y-6 flex-grow">
                       <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
                         <Camera className="w-6 h-6 text-slate-400 shrink-0 mt-1" />
@@ -616,7 +616,7 @@ export default function Home() {
                       </div>
                     </div>
                     <button onClick={() => scrollToFormWithDetails('สนใจบริการ Photo / Video Production')} className="mt-6 text-sm font-bold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
-                      สนใจบริการ Photo / Video Production <ChevronRight className="w-4 h-4" />
+                      สนใจบริการ <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
